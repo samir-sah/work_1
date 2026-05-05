@@ -1,5 +1,10 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
+import connectDB from "./db/database.js";
+import orderRoutes from "./routes/order.routes.js";
+
+dotenv.config();
 
 const app = express();
 
@@ -14,8 +19,13 @@ app.use(cors({
     allowedHeaders:["Content-Type", "Authorization"],
 }))
 
-app.get("/", (req,res) => {
-    res.send("welcome to basecamp")
+app.use("/api/orders", orderRoutes);
+
+connectDB();
+
+app.listen(8000, () => {
+    console.log("Server runnning on port 8000");
 })
+
 
 export default app;
